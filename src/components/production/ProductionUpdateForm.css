@@ -1,0 +1,148 @@
+.form {
+  padding: 1rem;
+}
+/* 
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.control input,
+.control textarea {
+  display: block;
+  font: inherit;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+  width: 100%;
+}
+
+.actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #77002e;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #77002e;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.actions button:hover,
+.actions button:active {
+  background-color: #a50e48;
+  border-color: #a50e48;
+}
+
+.mybtn {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #092946;
+  color: white;
+  border: 1px solid #092946;
+  margin: 0 1rem;
+}
+
+.mybtn:hover {
+  background-color: #9c1458;
+  border-color: #9c1458;
+}
+
+.mybtnalt {
+  background-color: transparent;
+  color: #092946;
+}
+
+.mybtnalt:hover {
+  background-color: #f8dae9;
+} */
+
+.growth {
+  width: 100%;
+  height: 460px;
+  overflow-y: scroll;
+  /* scrollbar-color:  green purple; */
+  scrollbar-width: thin;
+  font-size: 0.8rem;
+}
+
+
+label{
+  text-align: left !important;
+  font-weight: 400;  
+}
+
+
+.inputfont{
+  font-size: 0.8rem !important ;
+  color: #0a355eb7;
+  /* font-weight: 900; */
+}
+
+
+
+
+.mybtn {  
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #092946;
+  color: white;
+  border: 1px solid #092946;
+  margin: 3rem auto;
+}
+
+.mybtn:hover {
+  border-color: #e0a801;
+  color: #103b64;
+  background-color: #e0a801;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+.mybtnalt {
+  background-color: transparent;
+  color: #092946;
+}
+
+.mybtnalt:hover {
+  background-color: #103b64;
+  background-color: transparent;
+
+}
+
+
+.actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #103b64;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #103b64;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.actions button:hover,
+.actions button:active {
+  background-color: #103b64;
+  border-color: #103b64;
+}

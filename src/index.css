@@ -5,9 +5,39 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} 
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+/* * {
+  box-sizing: border-box;
+} */
+
+/* body {
+  font-family: sans-serif;
+  margin: 3rem;
+  background-color: #dfdfdf;
+} */
+/* 
+h1, h2 {
+  color: #333333;
+}
+
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  width: 20rem;
+}
+
+.actions {
+  text-align: right;
+} */
+

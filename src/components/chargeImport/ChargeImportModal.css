@@ -1,0 +1,119 @@
+.cimodal {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 80%;
+  height: calc(100% - 30%);
+  z-index: 10;
+  position: fixed;
+  top: 15%;
+  left: calc(100% - 90%);
+}
+
+.cimodalwodata {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 40%;
+  height: calc(100% - 60%);
+  z-index: 10;
+  position: fixed;
+  top: 25%;
+  left: calc(100% - 70%);
+}
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  width: 20rem;
+}
+
+
+.mybtn {  
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #092946;
+  color: white;
+  border: 1px solid #092946;
+  margin: 2rem auto;
+}
+
+.mybtn:hover {
+  border-color: #e0a801;
+  color: #103b64;
+  background-color: #e0a801;
+  font-weight: 700;
+  border-radius: 6px;
+}
+.btn--alt {
+  background-color: transparent;
+  color: white;
+}
+
+.btn--alt:hover {
+  background-color: #092946;
+}
+
+.citable {
+  /* width: 100px;
+  height: 460px; */
+  /* overflow-y: scroll; */
+  /* scrollbar-color: #e0a801 #092946; */
+  /* scrollbar-width: thin; */
+  font-size: 0.8rem;
+
+  /* overflow-x: scroll; */
+  
+}
+
+.citablerow td {
+  padding: 2px !important;
+}
+
+.citablerow:hover {
+  background-color: #092946;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  /* height: 500px; */
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.citable-container {
+  height: 160px;
+}
+
+.txtwarning{
+  font-weight: 900;
+  color: #e0a801;
+}
+
+table td,
+table th {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.mythead tr {
+  background-color: #092946;
+  color: white;
+  top: 0;
+}
+
+
+.mytheadtr {  
+  position: sticky !important;
+  top: 0 !important;
+}

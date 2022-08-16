@@ -1,13 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "bootstrap/dist/css/bootstrap.css";
+import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// import 'bootstrap/dist/js/bootstrap'
+// import 'bootstrap/dist/js/bootstrap.bundle'
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+
+import { ChargeImportContextProvider } from "./store/ChargeImportContext";
+import { ProductionContextProvider } from "./store/ProductionContext";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ChargeImportContextProvider>
+      <ProductionContextProvider>
+        <BrowserRouter>
+          <App classname="textbody" />
+        </BrowserRouter>
+      </ProductionContextProvider>
+    </ChargeImportContextProvider>
   </React.StrictMode>
 );
 

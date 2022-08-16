@@ -1,0 +1,14 @@
+.myfooter{
+    background-color: #092946;
+    font-weight: 700;
+}
+
+.dpc{
+    color: #e0a801;
+    font-weight: 900;
+    text-decoration: none;
+}
+.dpc:hover{
+    text-decoration: none;
+    color: #e0a801;
+}
