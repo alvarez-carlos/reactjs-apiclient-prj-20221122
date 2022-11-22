@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import ChargeImportPage from '../../pages/ChargeImportPage';
+import CIPage from '../../pages/CIPage';
 
-import ChargeImportUpdatePage from "../../pages/ChargeImportUpdatePage";
+import ProdPage from "../../pages/ProdPage";
 
-import ProductionPage from "../../pages/ProductionPage";
+import CIUpdateForm from "../chargeImport/CIUpdateForm";
 
-import ProductionUpdatePage from "../../pages/ProductionUpdatePage";
+import ProdUpdateForm from '../production/ProdUpdateForm'
 
 
 const RoutesSection = () => {
@@ -16,15 +16,15 @@ const RoutesSection = () => {
       <section>
         <Routes>
           <Route path="/" element={<div>Home</div>} exact />
-          <Route path="/chargeimport" element={<ChargeImportPage />} />
+          <Route path="/chargeimport" element={<CIPage />} />
           <Route
             path="/chargeimport/:id"
-            element={<ChargeImportUpdatePage />}
+            element={<CIUpdateForm />}
           />
-          <Route path="/production" element={<ProductionPage />} />
+          <Route path="/production" element={<ProdPage />} />
           <Route
             path="/production/:id"
-            element={<ProductionUpdatePage />}
+            element={<ProdUpdateForm />}
           />
           <Route path="/patient" element={<div>Hello</div>} />
           <Route path="/insurance" element={<div>Hello</div>} />

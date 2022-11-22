@@ -7,7 +7,7 @@ import './Layout.css'
 const Layout = ({ children }) => {
   return (
     <Fragment>
-        <HeaderNav />          
+        {/* <HeaderNav />           */}
         <main className='main'>
             {children}
         </main>

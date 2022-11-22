@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./ProductionModal.css";
+import "./ProdModal.css";
 import Moment from "moment";
 
-const ProductionModal = (props) => {
+const ProdModal = (props) => {
 
   let modifiedData = [];
 
@@ -161,4 +161,4 @@ const ProductionModal = (props) => {
   );
 };
 
-export default ProductionModal;
+export default ProdModal;

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import classes from './NoChargeImportFound.module.css';
+import './NotFound.css';
 
-const NoChargeImportFound = () => {
+const NotFound = () => {
   return (
     <div className={classes.noquotes}>
       <p>No quotes found!</p>
@@ -13,4 +13,5 @@ const NoChargeImportFound = () => {
   );
 };
 
-export default NoChargeImportFound;
+export default NotFound;
+

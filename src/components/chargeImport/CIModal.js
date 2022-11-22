@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./ChargeImportModal.css";
+import "./CIModal.css";
 import Moment from "moment";
 
-const ChargeImportModal = (props) => {
+const CIModal = (props) => {
   // const [modifiedData, setModifiedData] = useState([]);
   let modifiedData = [];
 
@@ -88,12 +88,7 @@ const ChargeImportModal = (props) => {
     }
   }
 
-  // modifiedData.push(prevState => {
-  //   return (
-  //     modifiedClaimProps
-  //   )
-  // })
-  // console.log(modifiedData)
+
 
   if (modifiedData.length === 0) {
     return (
@@ -166,99 +161,7 @@ const ChargeImportModal = (props) => {
         </div>
       </div>
     </>
-
-    // <div class="modal" tabindex="-1" role="dialog">
-    //   <div class="modal-dialog" role="document">
-    //     <div class="modal-content">
-    //       <div class="modal-header">
-    //         <h5 class="modal-title">Are you sure?</h5>
-    //         <p>The following filds will be update!</p>
-    //         <button
-    //           type="button"
-    //           class="close"
-    //           data-dismiss="modal"
-    //           aria-label="Close"
-    //         >
-    //           <span aria-hidden="true">&times;</span>
-    //         </button>
-    //       </div>
-    //       <div class="modal-body">
-    //         <div className="table-responsive">
-    //           <div class="table table-striped">
-    //             <table className="table">
-    //               <thead>
-    //                 <tr>
-    //                   <th scope="col">Field Description</th>
-    //                   <th scope="col">Previous Value</th>
-    //                   <th scope="col">New Value</th>
-    //                 </tr>
-    //               </thead>
-    //               <tbody>
-    //                 {modifiedData.map((property, index) => {
-    //                   return (
-    //                     <tr key={index} className="">
-    //                       <td>{property.propName}</td>
-    //                       <td>{property.prevValue}</td>
-    //                       <td>{property.newValue}</td>
-    //                     </tr>
-    //                   );
-    //                 })}
-    //               </tbody>
-    //             </table>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div class="modal-footer">
-    //         {/* <button type="button" class="btn btn-primary">
-    //             Save changes
-    //           </button>
-    //           <button
-    //             type="button"
-    //             class="btn btn-secondary"
-    //             data-dismiss="modal"
-    //           >
-    //             Close
-    //           </button> */}
-
-    //         <button className="btn btn--alt" onClick={props.cancelHandler}>
-    //           Cancel
-    //         </button>
-    //         <button className="btn" onClick={props.confirmHandler}>
-    //           Confirm
-    //         </button>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 
-export default ChargeImportModal;
-
-// <div className="table-responsive">
-// <div class="table table-striped">
-//   <table className={`${classes.citable} table`}>
-//     <thead>
-//       <tr>
-//         <th scope="col">Field Description</th>
-//         <th scope="col">Previous Value</th>
-//         <th scope="col">New Value</th>
-//       </tr>
-//     </thead>
-//     <tbody>
-//       {modifiedData.map((property, index) => {
-//         return (
-//           <tr
-//             key={item.ChgImportID}
-//             className={classes.citablerow}
-//           >
-//             <td></td>
-//             <td></td>
-//             <td></td>
-//           </tr>
-//         );
-//       })}
-//     </tbody>
-//   </table>
-// </div>
-// </div>
+export default CIModal;

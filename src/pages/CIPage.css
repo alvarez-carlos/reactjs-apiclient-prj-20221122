@@ -3,12 +3,12 @@ table th {
   white-space: nowrap;
   width: 1%;
 }
-
+/* 
 .mythead tr {
   background-color: #092946;
   color: white;
   top: 0;
-}
+} */
 
 
 .mytheadtr {  
@@ -20,7 +20,7 @@ table th {
 tbody tr:hover {
   background-color: #e0a801 !important;
 }
-
+/* 
 .txtnodeco {
   text-decoration: none;
   color: #092946;
@@ -29,7 +29,7 @@ tbody tr:hover {
 .txtnodeco:hover {
   text-decoration: none;
   color: #092946;
-}
+} */
 
 .tablesection {
   width: 98% !important;
@@ -87,7 +87,7 @@ tbody tr:hover {
 }
 
 
-.baglink{
+/* .baglink{
   background-color: #103b64;
   color: white;
-}
+} */

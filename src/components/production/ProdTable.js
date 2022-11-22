@@ -1,106 +1,11 @@
-import { useState, useEffect, useContext } from "react";
-
-import ProductionContext from "../store/ProductionContext";
-
+import React from 'react'
 import { Link } from "react-router-dom";
-import _ from "lodash";
 import Moment from "moment";
 
-import "./ProductionPage.css";
 
-const ProductionPage = () => {
-  const pCtx = useContext(ProductionContext);
-
-  const url = "http://localhost:5000/production/";
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [data, setData] = useState();
-
-  const [paginatedData, setPaginatedData] = useState();
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [search, setSearch] = useState("");
-
-  const fetchData = async () => {
-    const res = await fetch(url);
-    const dataJSON = await res.json();
-    pCtx.setClaims(dataJSON);
-    setData(dataJSON);
-    setIsLoading(false);
-    console.log(dataJSON);
-    setPaginatedData(_(dataJSON).slice(0).take(pageSize).value());
-  };
-
-  const pagination = (page) => {
-    setCurrentPage(page);
-    const startIndex = (page - 1) * pageSize;
-    const paginatedData = _(data).slice(startIndex).take(pageSize).value();
-    setPaginatedData(paginatedData);
-  };
-
-  const handleSearch = () => {
-    console.log(search);
-    // console.log(data.find((claim) => claim.TransID == search));
-    fetch(`http://localhost:5000/production/${search}`)
-      .then((resClaim) => resClaim.json())
-      .then((resJsonClaim) => {
-        // console.log('Res Claim: ', resJsonClaim)
-        setPaginatedData([resJsonClaim]);
-      });
-    // setPaginatedData([data.find((claim) => claim.TransID == search)]);
-  };
-
-  const handleEmptySearch = () => {
-    // console.log(pCtx.claims)
-    // setData({ ...pCtx.claims });
-    setPaginatedData(pCtx.claims);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const pageSize = 30;
-  const pageCount = data ? Math.ceil(data.length / pageSize) : 0;
-
-  if (pageCount === 0) return null;
-  const pages = _.range(1, pageCount + 1);
-
-  if (isLoading) {
-    return (
-      <section>
-        <h2>Spinner - Loading...</h2>
-      </section>
-    );
-  }
-
+const ProdTable = ({ paginatedData, pages, currentPage, pagination }) => {
   return (
-    <section className="tablesection">
-      <div className="">
-        <label htmlFor="search" className="txtnodeco searchtxt">
-          Search by Charge Import ID:
-          <input
-            id="search"
-            type="text"
-            onChange={(e) =>
-              e.target.value == ""
-                ? handleEmptySearch()
-                : setSearch(e.target.value)
-            }
-            className="pl-2 pt-1 pb-1 ml-1"
-          />
-          <button className="my_btn m-1" onClick={handleSearch}>
-            Search
-          </button>
-        </label>
-      </div>
-
-      {!paginatedData ? (
-        "No data found"
-      ) : (
-        <>
+    <>
           <div className="table-responsive vh-100 ">
             <div className="table  citable-container vh-100 ">
               <div className="table table-striped">
@@ -305,9 +210,7 @@ const ProductionPage = () => {
             </div>
           </div>
         </>
-      )}
-    </section>
-  );
-};
+  )
+}
 
-export default ProductionPage;
+export default ProdTable

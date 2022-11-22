@@ -1,128 +1,99 @@
-import "./ChargeImportUpdateForm.css";
+import "./ProdUpdateForm.css";
 // useRef Hook
-import { useRef, useState, useContext } from "react";
+import { useState, useContext } from "react";
 
-import { useNavigate } from "react-router-dom";
-
-
+import { useNavigate, useParams } from "react-router-dom";
 
 import Moment from "moment";
 
-import DatePicker from "react-datepicker";
+import ProdContext from "../../store/ProdContext";
 
-import ChargeImportContext from "../../store/ChargeImportContext";
+import ProdModal from "./ProdModal";
 
-import ChargeImportModal from "../../components/chargeImport/ChargeImportModal";
+import Backdrop from '../shared/Backdrop'
 
-import Backdrop from "../../components/chargeImport/ChargeImportBackdrop";
+const ProdUpdateForm = (props) => {
+  const pCtx = useContext(ProdContext);
 
-const ChargeImportUpdateForm = (props) => {
-  const ciCtx = useContext(ChargeImportContext);
-  const { claims } = ciCtx;
-  const { id } = props;
+
+  const { id } = useParams()
+
+  // console.log(pCtx)
+
+  const { claims } = pCtx;
+  console.log(claims);
 
   const navigate = useNavigate();
 
   const [showOverlay, setShowOverlay] = useState(false);
   const [enteredData, setEnteredData] = useState({});
 
-  const claim = claims.find((claim) => claim.ChgImportID == id);
-  // console.log(claim.PatientDOB)
-  console.log(
-    "MomentDate",
-    Moment.utc(new Date(claim.PatientDOB)).format("MM-DD-YYYY")
-  );
+  const claim = claims.find((claim) => claim.TransID == id);
 
-  // Form
-  const [ChgImportID, setChgImportID] = useState(claim.ChgImportID || "");
+  // return(
+  //   'Hello from form'
+  // )
+
+  const [TransID, setTransID] = useState(claim.TransID || ""); //new
   const [BillCoID, setBillCoID] = useState(claim.BillCoID || "");
   const [ClientID, setClientID] = useState(claim.ClientID || "");
-  const [SrcFileImportDate, setSrcFileImportDate] = useState(
-    claim.SrcFileImportDate || ""
-  );
-  const [SrcItemImportDateWTime, setSrcItemImportDateWTime] = useState(
-    claim.SrcItemImportDateWTime || ""
-  );
-  const [SourceName, setSourceName] = useState(claim.SourceName || "");
-  const [SourceImportID, setSourceImportID] = useState(
-    claim.SourceImportID || ""
-  );
-  const [ChargeImportDate, setChargeImportDate] = useState(
-    claim.ChargeImportDate || ""
-  );
-  const [ChargeImportUserID, setChargeImportUserID] = useState(
-    claim.ChargeImportUserID || ""
-  );
-  const [LastUserID, setLastUserID] = useState(claim.LastUserID || "");
-  const [LastUserUpdate, setLastUserUpdate] = useState(
-    claim.LastUserUpdate || ""
-  );
+  const [ChgImportID, setChgImportID] = useState(claim.ChgImportID || "");
+  const [TransPostDate, setTransPostDate] = useState(claim.TransPostDate || ""); //new
+  const [PatID, setPatID] = useState(claim.PatID || ""); //new
+  const [PatientSS, setPatientSS] = useState(claim.PatientSS || ""); //new => replace the field PatientSSN
+
   const [PatientFirstName, setPatientFirstName] = useState(
     claim.PatientFirstName || ""
-  );
-  const [PatientMiddleName, setPatientMiddleName] = useState(
-    claim.PatientMiddleName || ""
   );
   const [PatientLastName, setPatientLastName] = useState(
     claim.PatientLastName || ""
   );
-  const [PatientStreet, setPatientStreet] = useState(claim.PatientStreet || "");
-  const [PatientStreet2, setPatientStreet2] = useState(
-    claim.PatientStreet2 || ""
-  );
-  const [PatientCity, setPatientCity] = useState(claim.PatientCity || "");
-  const [PatientState, setPatientState] = useState(claim.PatientState || "");
-  const [PatientZip, setPatientZip] = useState(claim.PatientZip || "");
+
   const [PatientDOB, setPatientDOB] = useState(
     Moment.utc(new Date(claim.PatientDOB)).format("YYYY-MM-DD") || ""
   );
   const [PatientSex, setPatientSex] = useState(claim.PatientSex || "");
-  const [PatientPhoneNumber, setPatientPhoneNumber] = useState(
-    claim.PatientPhoneNumber || ""
-  );
-  const [PatientSSN, setPatientSSN] = useState(claim.PatientSSN || "");
-  const [PatientIDType, setPatientIDType] = useState(claim.PatientIDType || "");
-  const [PatientDriversLicense, setPatientDriversLicense] = useState(
-    claim.PatientDriversLicense || ""
-  );
-  const [PatientConsent, setPatientConsent] = useState(
-    claim.PatientConsent || ""
-  );
-  const [PatientTRF_Form, setPatientTRF_Form] = useState(
-    claim.PatientTRF_Form || ""
-  );
+
   const [SubscriberFirstName, setSubscriberFirstName] = useState(
     claim.SubscriberFirstName || ""
   );
   const [SubscriberLastName, setSubscriberLastName] = useState(
     claim.SubscriberLastName || ""
   );
-  const [SubscriberDOB, setSubscriberDOB] = useState(
-    Moment.utc(new Date(claim.SubscriberDOB)).format("YYYY-MM-DD") || ""
-  );
-  const [PrimaryInsName, setPrimaryInsName] = useState(
-    claim.PrimaryInsName || ""
-  );
+
+  const [PrimaryInsCoID, setPrimaryInsCoID] = useState(
+    claim.PrimaryInsCoID || ""
+  ); //new
+
+  const [PrimaryInsNameFrSource, setPrimaryInsNameFrSource] = useState(
+    claim.PrimaryInsNameFrSource || ""
+  ); // PrimaryInsNameFrSource => replace the PrimaryInsName Field
+
+  const [PrimaryInsCoName, setPrimaryInsCoName] = useState(
+    claim.PrimaryInsCoName || ""
+  ); //new
+
+  const [PrimaryInsPlanName, setPrimaryInsPlanName] = useState(
+    claim.PrimaryInsPlanName || ""
+  ); //new
+
   const [PrimaryInsPolicyNo, setPrimaryInsPolicyNo] = useState(
     claim.PrimaryInsPolicyNo || ""
   );
+
   const [PrimaryInsGroupNo, setPrimaryInsGroupNo] = useState(
     claim.PrimaryInsGroupNo || ""
   );
+
   const [PrimaryInsRelation, setPrimaryInsRelation] = useState(
     claim.PrimaryInsRelation || ""
   );
-  const [InsCardFront, setInsCardFront] = useState(claim.InsCardFront || "");
-  const [InsCardBack, setInsCardBack] = useState(claim.InsCardBack || "");
-  const [SecondaryInsName, setSecondaryInsName] = useState(
-    claim.SecondaryInsName || ""
-  );
-  const [SecondaryInsPolicyNo, setSecondaryInsPolicyNo] = useState(
-    claim.SecondaryInsPolicyNo || ""
-  );
-  const [SecondaryInsGroupNo, setSecondaryInsGroupNo] = useState(
-    claim.SecondaryInsGroupNo || ""
-  );
+
+  const [IsHRSA, setIsHRSA] = useState(claim.IsHRSA || ""); //new
+  const [InsuranceScope, setInsuranceScope] = useState(
+    claim.InsuranceScope || ""
+  ); //new
+
   const [OrderingProviderNPI, setOrderingProviderNPI] = useState(
     claim.OrderingProviderNPI || ""
   );
@@ -150,28 +121,25 @@ const ChargeImportUpdateForm = (props) => {
   const [OrderingProviderEmail, setOrderingProviderEmail] = useState(
     claim.OrderingProviderEmail || ""
   );
+
+  const [PatientIDType, setPatientIDType] = useState(claim.PatientIDType || "");
+
+  const [ServiceType, setServiceType] = useState(claim.ServiceType || "");
+
   const [FacilityID, setFacilityID] = useState(claim.FacilityID || "");
   const [FacilityName, setFacilityName] = useState(claim.FacilityName || "");
-  const [FacilityStreet, setFacilityStreet] = useState(
-    claim.FacilityStreet || ""
-  );
-  const [FacilityCity, setFacilityCity] = useState(claim.FacilityCity || "");
-  const [FacilityState, setFacilityState] = useState(claim.FacilityState || "");
-  const [FacilityZip, setFacilityZip] = useState(claim.FacilityZip || "");
-  const [FacilityCLIA, setFacilityCLIA] = useState(claim.FacilityCLIA || "");
-  const [AccessionNo, setAccessionNo] = useState(claim.AccessionNo || "");
+
   const [DateOfService, setDateOfService] = useState(
     Moment.utc(new Date(claim.DateOfService)).format("YYYY-MM-DD") || ""
   );
   const [DateOfResults, setDateOfResults] = useState(
     Moment.utc(new Date(claim.DateOfResults)).format("YYYY-MM-DD") || ""
   );
-  const [CPTCode1, setCPTCode1] = useState(claim.CPTCode1 || "");
-  const [CPTCode2, setCPTCode2] = useState(claim.CPTCode2 || "");
-  const [CPTCode3, setCPTCode3] = useState(claim.CPTCode3 || "");
-  const [CPTCode4, setCPTCode4] = useState(claim.CPTCode4 || "");
-  const [CPTCode5, setCPTCode5] = useState(claim.CPTCode5 || "");
-  const [CPTCode6, setCPTCode6] = useState(claim.CPTCode6 || "");
+
+  const [AccessionNo, setAccessionNo] = useState(claim.AccessionNo || "");
+  const [ProcessStage, setProcessStage] = useState(claim.ProcessStage || "");
+  const [CPTCode, setCPTCode] = useState(claim.CPTCode || ""); // replace the field CPTCode1 and delete the rest of cptcode
+
   const [ICD10Code1, setICD10Code1] = useState(claim.ICD10Code1 || "");
   const [ICD10Code2, setICD10Code2] = useState(claim.ICD10Code2 || "");
   const [ICD10Code3, setICD10Code3] = useState(claim.ICD10Code3 || "");
@@ -184,27 +152,44 @@ const ChargeImportUpdateForm = (props) => {
   const [ICD10Code10, setICD10Code10] = useState(claim.ICD10Code10 || "");
   const [ICD10Code11, setICD10Code11] = useState(claim.ICD10Code11 || "");
   const [ICD10Code12, setICD10Code12] = useState(claim.ICD10Code12 || "");
-  const [ServiceType, setServiceType] = useState(claim.ServiceType || "");
-  const [ClientNotes, setClientNotes] = useState(claim.ClientNotes || "");
-  const [SubClientName, setSubClientName] = useState(claim.SubClientName || "");
-  const [PartnerGroupName, setPartnerGroupName] = useState(
-    claim.PartnerGroupName || ""
+
+  const [Prof_Fee, setProf_Fee] = useState(claim.Prof_Fee || ""); //new
+  const [Tech_Fee, setTech_Fee] = useState(claim.Tech_Fee || ""); //new
+  const [Glob_Fee, setGlob_Fee] = useState(claim.Glob_Fee || ""); //new
+  const [MCR_Prof_Fee, setMCR_Prof_Fee] = useState(claim.MCR_Prof_Fee || ""); //new
+  const [MCR_Tech_Fee, setMCR_Tech_Fee] = useState(claim.MCR_Tech_Fee || ""); //new
+  const [MCR_Glob_Fee, setMCR_Glob_Fee] = useState(claim.MCR_Glob_Fee || ""); //new
+
+  const [LastBotMachineName, setLastBotMachineName] = useState(
+    claim.LastBotMachineName || ""
+  ); //new
+  const [LastBotResult, setLastBotResult] = useState(claim.LastBotResult || ""); //new
+
+  const [Voided, setVoided] = useState(claim.Voided || ""); //new
+  const [VoidedDate, setVoidedDate] = useState(claim.VoidedDate || ""); //new
+  const [LastUserID, setLastUserID] = useState(claim.LastUserID || "");
+  const [LastUserUpdate, setLastUserUpdate] = useState(
+    claim.LastUserUpdate || ""
   );
-  const [Barcode, setBarcode] = useState(claim.Barcode || "");
-  const [WSLOrderID, setWSLOrderID] = useState(claim.WSLOrderID || "");
-  const [InsMissing, setInsMissing] = useState(claim.InsMissing || "");
-  const [DateToProduction, setDateToProduction] = useState(
-    claim.DateToProduction || ""
-  );
-  const [ProcessStage, setProcessStage] = useState(claim.ProcessStage || "");
-  const [NeedsReview, setNeedsReview] = useState(claim.NeedsReview || "");
-  const [IssueID, setIssueID] = useState(claim.IssueID || "");
-  const [InNGO, setInNGO] = useState(claim.InNGO || "");
-  const [NGO_IsBalance, setNGO_IsBalance] = useState(claim.NGO_IsBalance || "");
+  const [HRSAID, setHRSAID] = useState(claim.HRSAID || ""); //new
+  const [NGO_ChargeItemID, setNGO_ChargeItemID] = useState(
+    claim.NGO_ChargeItemID || ""
+  ); //new
+  const [NGO_ChargeAmount, setNGO_ChargeAmount] = useState(
+    claim.NGO_ChargeAmount || ""
+  ); //new
+  const [NGO_Pat_Resp, setNGO_Pat_Resp] = useState(claim.NGO_Pat_Resp || ""); //new
+  const [NGO_Pat_Pmt, setNGO_Pat_Pmt] = useState(claim.NGO_Pat_Pmt || ""); //new
+  const [NGO_Ins_Pmt, setNGO_Ins_Pmt] = useState(claim.NGO_Ins_Pmt || ""); //new
+  const [NGO_Ins_Adj, setNGO_Ins_Adj] = useState(claim.NGO_Ins_Adj || ""); //new
+  const [NGO_InsBal, setNGO_InsBal] = useState(claim.NGO_InsBal || ""); //new
+  const [NGO_RefreshDate, setNGO_RefreshDate] = useState(
+    claim.NGO_RefreshDate || ""
+  ); //new
 
   const myConfirmHandler = () => {
     console.log("Data Entered", enteredData);
-    fetch(`http://localhost:5000/chargeimport/${enteredData.ChgImportID}`, {
+    fetch(`http://localhost:5000/Prod/${enteredData.ChgImportID}`, {
       method: "PUT",
       body: JSON.stringify(enteredData),
       headers: {
@@ -213,7 +198,7 @@ const ChargeImportUpdateForm = (props) => {
     }).then((res) => {
       console.log(res);
       setShowOverlay(false);
-      navigate("/chargeimport"); //navigate us away w/o allowing us to navigate back to the prev
+      navigate("/Prod");
     });
   };
 
@@ -229,45 +214,28 @@ const ChargeImportUpdateForm = (props) => {
     event.preventDefault();
 
     setEnteredData({
-      ChgImportID: ChgImportID || "",
+      TransID: TransID || "",
       BillCoID: BillCoID || "",
       ClientID: ClientID || "",
-      SrcFileImportDate: SrcFileImportDate || "",
-      SrcItemImportDateWTime: SrcItemImportDateWTime || "",
-      SourceName: SourceName || "",
-      SourceImportID: SourceImportID || "",
-      ChargeImportDate: ChargeImportDate || "",
-      ChargeImportUserID: ChargeImportUserID || "",
-      LastUserID: LastUserID || "",
-      LastUserUpdate: LastUserUpdate || "",
+      ChgImportID: ChgImportID || "",
+      TransPostDate: TransPostDate || "",
+      PatID: PatID || "",
+      PatientSS: PatientSS || "",
       PatientFirstName: PatientFirstName || "",
-      PatientMiddleName: PatientMiddleName || "",
       PatientLastName: PatientLastName || "",
-      PatientStreet: PatientStreet || "",
-      PatientStreet2: PatientStreet2 || "",
-      PatientCity: PatientCity || "",
-      PatientState: PatientState || "",
-      PatientZip: PatientZip || "",
       PatientDOB: PatientDOB || "",
       PatientSex: PatientSex || "",
-      PatientPhoneNumber: PatientPhoneNumber || "",
-      PatientSSN: PatientSSN || "",
-      PatientIDType: PatientIDType || "",
-      PatientDriversLicense: PatientDriversLicense || "",
-      PatientConsent: PatientConsent || "",
-      PatientTRF_Form: PatientTRF_Form || "",
       SubscriberFirstName: SubscriberFirstName || "",
       SubscriberLastName: SubscriberLastName || "",
-      SubscriberDOB: SubscriberDOB || "",
-      PrimaryInsName: PrimaryInsName || "",
+      PrimaryInsCoID: PrimaryInsCoID || "",
+      PrimaryInsNameFrSource: PrimaryInsNameFrSource || "",
+      PrimaryInsCoName: PrimaryInsCoName || "",
+      PrimaryInsPlanName: PrimaryInsPlanName || "",
       PrimaryInsPolicyNo: PrimaryInsPolicyNo || "",
       PrimaryInsGroupNo: PrimaryInsGroupNo || "",
       PrimaryInsRelation: PrimaryInsRelation || "",
-      InsCardFront: InsCardFront || "",
-      InsCardBack: InsCardBack || "",
-      SecondaryInsName: SecondaryInsName || "",
-      SecondaryInsPolicyNo: SecondaryInsPolicyNo || "",
-      SecondaryInsGroupNo: SecondaryInsGroupNo || "",
+      IsHRSA: IsHRSA || "",
+      InsuranceScope: InsuranceScope || "",
       OrderingProviderNPI: OrderingProviderNPI || "",
       OrderingProviderName: OrderingProviderName || "",
       OrderingProviderStreet: OrderingProviderStreet || "",
@@ -277,22 +245,15 @@ const ChargeImportUpdateForm = (props) => {
       OrderingProviderZip: OrderingProviderZip || "",
       OrderingProviderPhone: OrderingProviderPhone || "",
       OrderingProviderEmail: OrderingProviderEmail || "",
+      PatientIDType: PatientIDType || "",
+      ServiceType: ServiceType || "",
       FacilityID: FacilityID || "",
       FacilityName: FacilityName || "",
-      FacilityStreet: FacilityStreet || "",
-      FacilityCity: FacilityCity || "",
-      FacilityState: FacilityState || "",
-      FacilityZip: FacilityZip || "",
-      FacilityCLIA: FacilityCLIA || "",
-      AccessionNo: AccessionNo || "",
       DateOfService: DateOfService || "",
       DateOfResults: DateOfResults || "",
-      CPTCode1: CPTCode1 || "",
-      CPTCode2: CPTCode2 || "",
-      CPTCode3: CPTCode3 || "",
-      CPTCode4: CPTCode4 || "",
-      CPTCode5: CPTCode5 || "",
-      CPTCode6: CPTCode6 || "",
+      AccessionNo: AccessionNo || "",
+      ProcessStage: ProcessStage || "",
+      CPTCode: CPTCode || "",
       ICD10Code1: ICD10Code1 || "",
       ICD10Code2: ICD10Code2 || "",
       ICD10Code3: ICD10Code3 || "",
@@ -305,19 +266,27 @@ const ChargeImportUpdateForm = (props) => {
       ICD10Code10: ICD10Code10 || "",
       ICD10Code11: ICD10Code11 || "",
       ICD10Code12: ICD10Code12 || "",
-      ServiceType: ServiceType || "",
-      ClientNotes: ClientNotes || "",
-      SubClientName: SubClientName || "",
-      PartnerGroupName: PartnerGroupName || "",
-      Barcode: Barcode || "",
-      WSLOrderID: WSLOrderID || "",
-      InsMissing: InsMissing || "",
-      DateToProduction: DateToProduction || "",
-      ProcessStage: ProcessStage || "",
-      NeedsReview: NeedsReview || "",
-      IssueID: IssueID || "",
-      InNGO: InNGO || "",
-      NGO_IsBalance: NGO_IsBalance || "",
+      Prof_Fee: Prof_Fee || "",
+      Tech_Fee: Tech_Fee || "",
+      Glob_Fee: Glob_Fee || "",
+      MCR_Prof_Fee: MCR_Prof_Fee || "",
+      MCR_Tech_Fee: MCR_Tech_Fee || "",
+      MCR_Glob_Fee: MCR_Glob_Fee || "",
+      LastBotMachineName: LastBotMachineName || "",
+      LastBotResult: LastBotResult || "",
+      Voided: Voided || "",
+      VoidedDate: VoidedDate || "",
+      LastUserID: LastUserID || "",
+      LastUserUpdate: LastUserUpdate || "",
+      HRSAID: HRSAID || "",
+      NGO_ChargeItemID: NGO_ChargeItemID || "",
+      NGO_ChargeAmount: NGO_ChargeAmount || "",
+      NGO_Pat_Resp: NGO_Pat_Resp || "",
+      NGO_Pat_Pmt: NGO_Pat_Pmt || "",
+      NGO_Ins_Pmt: NGO_Ins_Pmt || "",
+      NGO_Ins_Adj: NGO_Ins_Adj || "",
+      NGO_InsBal: NGO_InsBal || "",
+      NGO_RefreshDate: NGO_RefreshDate || null,
     });
     setShowOverlay(true);
   };
@@ -328,22 +297,22 @@ const ChargeImportUpdateForm = (props) => {
         className="growth  needs-validation text-left"
         onSubmit={submitHandler}
       >
-        {/* SourceImportID
+        {/* TransID
         ChgImportID
         ClientID
-        PatientFirstName
-        PatientMiddleName
-        PatientLastName */}
+        TransPostDate
+        PatID
+        PatientSS */}
         <div className="row mt-4">
-          {/*Source Import ID */}
+          {/*Trans ID */}
           <div className="col-md-2 ">
-            <label for="sourceimportid">Source Import ID</label>
+            <label for="transid">Trans ID</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="sourceimportid"
-              placeholder={SourceImportID}
-              value={SourceImportID}
+              id="transid"
+              placeholder={TransID}
+              value={TransID}
               readOnly
             />
             <div className="valid-feedback">Looks good!</div>
@@ -351,13 +320,13 @@ const ChargeImportUpdateForm = (props) => {
 
           {/* Charge Import ID*/}
           <div className="col-md-2 ">
-            <label for="chargeimportid" className="labelfont">
+            <label for="Prodid" className="labelfont">
               Charge Import ID
             </label>
             <input
               type="text"
               className={"form-control labelfont"}
-              id="chargeimportid"
+              id="Prodid"
               placeholder={ChgImportID}
               value={ChgImportID}
               readOnly
@@ -367,7 +336,7 @@ const ChargeImportUpdateForm = (props) => {
 
           {/* Client ID */}
           <div className="col-md-2 ">
-            <label for="clientid">Client ID</label>
+            <label for="clientid">ClientID</label>
             <input
               type="text"
               className={"form-control"}
@@ -379,6 +348,57 @@ const ChargeImportUpdateForm = (props) => {
             <div className="valid-feedback">Looks good!</div>
           </div>
 
+          {/* TransPostDate */}
+          <div className="col-md-2 ">
+            <label for="transpostdate">TransPostDate</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="transpostdate"
+              value={Moment.utc(new Date(claim.TransPostDate)).format(
+                "YYYY-MM-DD"
+              )}
+              readOnly
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/*PatID */}
+          <div className="col-md-2 ">
+            <label for="patientid">PatID</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="patientid"
+              placeholder={PatID}
+              value={PatID}
+              readOnly
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/*PatientSS */}
+          <div className="col-md-2 ">
+            <label for="patientss">PatientSS</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="patientss"
+              placeholder={PatientSS}
+              value={PatientSS}
+              readOnly
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+
+        {/* PatientFirstName
+          PatientLastName
+          PatientDOB
+          PatientSex
+          SubscriberFirstName
+          SubscriberLastName */}
+        <div className="row mt-4">
           {/* Patient First Name */}
           <div className="col-md-2 ">
             <label for="patientfirstname">Patient FirstName</label>
@@ -389,20 +409,6 @@ const ChargeImportUpdateForm = (props) => {
               placeholder={PatientFirstName}
               value={PatientFirstName}
               onChange={(e) => setPatientFirstName(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* Patient Middle Name */}
-          <div className="col-md-2 ">
-            <label for="patientmiddlename">Patient MiddleName</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="patientmiddlename"
-              placeholder={PatientMiddleName}
-              value={PatientMiddleName}
-              onChange={(e) => setPatientMiddleName(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
@@ -420,15 +426,7 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
-        </div>
 
-        {/* PatientDOB
-        PatientSex
-        PatientStreet
-        PatientStreet2
-        PatientCity
-        PatientState */}
-        <div className="row mt-4">
           {/*Patient DOB */}
           <div className="col-md-2 ">
             <label for="patientdob">Patient DOB</label>
@@ -460,85 +458,7 @@ const ChargeImportUpdateForm = (props) => {
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/* Patient Street */}
-          <div className="col-md-2 ">
-            <label for="patientstreet">Patient Street</label>
-            <input
-              type="text"
-              className={"form-control"}
-              id="patientstreet"
-              placeholder={PatientStreet}
-              value={PatientStreet}
-              onChange={(e) => setPatientStreet(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* Patient Street 2 */}
-          <div className="col-md-2 ">
-            <label for="patientstreettwo">Patient Street 2</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="patientstreettwo"
-              placeholder={PatientStreet2}
-              value={PatientStreet2}
-              onChange={(e) => setPatientStreet2(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* Patient City*/}
-          <div className="col-md-2 ">
-            <label for="patientcity">Patient City</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="patientcity"
-              placeholder={PatientCity}
-              value={PatientCity}
-              onChange={(e) => setPatientCity(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* Patient State */}
-          <div className="col-md-2 ">
-            <label for="patientstate">Patient State</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="patientstate"
-              placeholder={PatientState}
-              value={PatientState}
-              onChange={(e) => setPatientState(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-        </div>
-
-        {/* PatientZip
-        SubscriberFirstName
-        SubscriberLastName
-        SubscriberDOB
-        PrimaryInsName
-        PrimaryInsPolicyNo */}
-        <div className="row mt-4">
-          {/*Patient Zip */}
-          <div className="col-md-2 ">
-            <label for="patientzip">Patient Zip</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="patientzip"
-              placeholder={PatientZip}
-              value={PatientZip}
-              onChange={(e) => setPatientZip(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/*Subscriber Firsst Name*/}
+          {/*Subscriber First Name*/}
           <div className="col-md-2 ">
             <label for="subscriberfirstname" className="labelfont">
               Subscriber First Name
@@ -567,31 +487,67 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
+        </div>
 
-          {/* Subscriber DOB*/}
+        {/*PrimaryInsCoID
+        PrimaryInsNameFrSource
+        PrimaryInsCoName
+        PrimaryInsPlanName
+        PrimaryInsPolicyNo
+        PrimaryInsGroupNo */}
+        <div className="row mt-4">
+          {/*PrimaryInsCoID */}
           <div className="col-md-2 ">
-            <label for="subscriberdob">Subscriber DOB</label>
+            <label for="primaryinscoid">PrimaryInsCoID</label>
             <input
-              type="date"
+              type="text"
               className={"form-control inputfont"}
-              id="subscriberdob"
-              placeholder={SubscriberDOB}
-              value={SubscriberDOB}
-              onChange={(e) => setSubscriberDOB(e.target.value)}
+              id="primaryinscoid"
+              placeholder={PrimaryInsCoID}
+              value={PrimaryInsCoID}
+              onChange={(e) => setPrimaryInsCoID(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/* Primary Insurance Name*/}
+          {/*PrimaryInsNameFrSource*/}
           <div className="col-md-2 ">
-            <label for="primaryinsname">PrimaryIns Name</label>
+            <label for="primaryinsnamefrsrc">PrimaryInsNameFrSource</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="primaryinsname"
-              placeholder={PrimaryInsName}
-              value={PrimaryInsName}
-              onChange={(e) => setPrimaryInsName(e.target.value)}
+              id="primaryinsnamefrsrc"
+              placeholder={PrimaryInsNameFrSource}
+              value={PrimaryInsNameFrSource}
+              onChange={(e) => setPrimaryInsNameFrSource(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/*PrimaryInsCoName*/}
+          <div className="col-md-2 ">
+            <label for="primaryinsconame">PrimaryInsCoName</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="primaryinsconame"
+              placeholder={PrimaryInsCoName}
+              value={PrimaryInsCoName}
+              onChange={(e) => setPrimaryInsCoName(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/*PrimaryInsPlanName*/}
+          <div className="col-md-2 ">
+            <label for="primaryinsplanname">PrimaryInsPlanName</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="primaryinsplanname"
+              placeholder={PrimaryInsPlanName}
+              value={PrimaryInsPlanName}
+              onChange={(e) => setPrimaryInsPlanName(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
@@ -609,29 +565,29 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
-        </div>
 
-        {/* PrimaryInsGroupNo
-        PrimaryInsRelation
-        SecondaryInsName
-        SecondaryInsPolicyNo
-        SecondaryInsGroupNo
-        OrderingProviderNPI  */}
-        <div className="row mt-4">
-          {/* Primary Ins Group Number */}
+          {/*PrimaryInsGroupNo*/}
           <div className="col-md-2 ">
-            <label for="pimaryinsgroupno">PrimaryIns GroupNo</label>
+            <label for="primaryinsgroupno">PrimaryInsGroupNo</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="pimaryinsgroupno"
+              id="primaryinsgroupno"
               placeholder={PrimaryInsGroupNo}
               value={PrimaryInsGroupNo}
               onChange={(e) => setPrimaryInsGroupNo(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
+        </div>
 
+        {/* PrimaryInsRelation
+            IsHRSA
+            InsuranceScope
+            OrderingProviderNPI
+            OrderingProviderName
+            OrderingProviderStreet */}
+        <div className="row mt-4">
           {/*Primary Ins Relation*/}
           <div className="col-md-2 ">
             <label for="primaryinsrelation" className="labelfont">
@@ -648,44 +604,34 @@ const ChargeImportUpdateForm = (props) => {
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/*SecondaryInsName*/}
+          {/* IsHRSA */}
           <div className="col-md-2 ">
-            <label for="secondaryinsname">SecondaryIns Name</label>
+            <label for="ishrsa">IsHRSA</label>
+            <select
+              id="ishrsa"
+              className="custom-select"
+              value={IsHRSA === true ? "1" : "0"}
+              onChange={(e) =>
+                e.target.value === "1" ? setIsHRSA(true) : setIsHRSA(false)
+              }
+            >
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/*InsuranceScope*/}
+          <div className="col-md-2 ">
+            <label for="insscope">Insurance Scope</label>
             <input
               type="text"
               className={"form-control"}
-              id="secondaryinsname"
-              placeholder={SecondaryInsName}
-              value={SecondaryInsName}
-              onChange={(e) => setSecondaryInsName(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* Secondary Insurance PolicyNo */}
-          <div className="col-md-2 ">
-            <label for="secondaryinspolicyno">SecondaryIns PolicyNo</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="secondaryinspolicyno"
-              placeholder={SecondaryInsPolicyNo}
-              value={SecondaryInsPolicyNo}
-              onChange={(e) => setSecondaryInsPolicyNo(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* Secondary Ins Group Number*/}
-          <div className="col-md-2 ">
-            <label for="secondaryinsgroupno">SecondaryIns GroupNo</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="secondaryinsgroupno"
-              placeholder={SecondaryInsGroupNo}
-              value={SecondaryInsGroupNo}
-              onChange={(e) => setSecondaryInsGroupNo(e.target.value)}
+              id="insscope"
+              placeholder={InsuranceScope}
+              value={InsuranceScope}
+              onChange={(e) => setInsuranceScope(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
@@ -703,16 +649,7 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
-        </div>
 
-        {/* 
-        OrderingProviderName
-        OrderingProviderStreet
-        OrderingProviderStreet2
-        OrderingProviderCity
-        OrderingProviderState
-        OrderingProviderZip */}
-        <div className="row mt-4">
           {/* Ordering Provider Name */}
           <div className="col-md-2 ">
             <label for="orderingprovidername">OrderingProvider Name</label>
@@ -742,7 +679,16 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
+        </div>
 
+        {/* 
+        OrderingProviderStreet2
+        OrderingProviderCity
+        OrderingProviderState
+        OrderingProviderZip
+        OrderingProviderPhone
+        OrderingProviderEmail */}
+        <div className="row mt-4">
           {/*Ordering Provider Street2*/}
           <div className="col-md-2 ">
             <label for="orderingproviderstreet2" className="labelfont">
@@ -800,15 +746,7 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
-        </div>
 
-        {/* OrderingProviderPhone
-          OrderingProviderEmail
-          FacilityID
-          FacilityName
-          FacilityStreet
-          FacilityCity */}
-        <div className="row mt-4">
           {/* Ordering Provider Phone */}
           <div className="col-md-2 ">
             <label for="orderingproviderphone">OrderingProvider Phone</label>
@@ -835,6 +773,49 @@ const ChargeImportUpdateForm = (props) => {
               placeholder={OrderingProviderEmail}
               value={OrderingProviderEmail}
               onChange={(e) => setOrderingProviderEmail(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+
+        {/* PatientIDType
+            ServiceType
+            FacilityID
+            FacilityName
+            DateOfService
+            DateOfResults
+            */}
+        <div className="row mt-4">
+          {/*PatientIDType*/}
+          <div className="col-md-2 ">
+            <label for="patidtype" className="labelfont">
+              PatientIDType
+            </label>
+            <input
+              type="text"
+              className={"form-control labelfont"}
+              id="patidtype"
+              placeholder={PatientIDType}
+              value={PatientIDType}
+              onChange={(e) => setPatientIDType(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* ServiceType */}
+          <div className="col-md-2 ">
+            <label for="servicetype">Service Type</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="servicetype"
+              placeholder={ServiceType}
+              value={ServiceType}
+              onChange={(e) =>
+                e.target.value === "1"
+                  ? setServiceType(true)
+                  : setServiceType(false)
+              }
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
@@ -869,102 +850,6 @@ const ChargeImportUpdateForm = (props) => {
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/*FacilityStreet*/}
-          <div className="col-md-2 ">
-            <label for="facilitystreet">Facility Street</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="facilitystreet"
-              placeholder={FacilityStreet}
-              value={FacilityStreet}
-              onChange={(e) => setFacilityStreet(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* FacilityCity*/}
-          <div className="col-md-2 ">
-            <label for="facilitycity">Facility City</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="facilitycity"
-              placeholder={FacilityCity}
-              value={FacilityCity}
-              onChange={(e) => setFacilityCity(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-        </div>
-
-        {/* FacilityState
-        FacilityZip
-        FacilityCLIA
-        AccessionNo
-        DateOfService
-        DateOfResults */}
-        <div className="row mt-4">
-          {/* Facility State */}
-          <div className="col-md-2 ">
-            <label for="facilitystate">Facility State</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="facilitystate"
-              placeholder={FacilityState}
-              value={FacilityState}
-              onChange={(e) => setFacilityState(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/*FacilityZip*/}
-          <div className="col-md-2 ">
-            <label for="facilityzip" className="labelfont">
-              Facility Zip
-            </label>
-            <input
-              type="text"
-              className={"form-control labelfont"}
-              id="facilityzip"
-              placeholder={FacilityZip}
-              value={FacilityZip}
-              onChange={(e) => setFacilityZip(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/*FacilityCLIA*/}
-          <div className="col-md-2 ">
-            <label for="facilityclia" className="labelfont">
-              Facility CLIA
-            </label>
-            <input
-              type="text"
-              className={"form-control labelfont"}
-              id="facilityclia"
-              placeholder={FacilityCLIA}
-              value={FacilityCLIA}
-              onChange={(e) => setFacilityCLIA(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* AccessionNo */}
-          <div className="col-md-2 ">
-            <label for="accessionno">AccessionNo</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="accessionno"
-              placeholder={AccessionNo}
-              value={AccessionNo}
-              onChange={(e) => setAccessionNo(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
           {/*DateOfService*/}
           <div className="col-md-2 ">
             <label for="dos">Service Date</label>
@@ -994,105 +879,70 @@ const ChargeImportUpdateForm = (props) => {
           </div>
         </div>
 
-        {/* CPTCode1
-        CPTCode2
-        CPTCode3
-        CPTCode4
-        CPTCode5
-        CPTCode6 */}
+        {/*AccessionNo
+          ProcessStage
+          CPTCode
+          ICD10Code1
+          ICD10Code2
+          ICD10Code3 */}
         <div className="row mt-4">
-          {/* CPTCode1 */}
+          {/* AccessionNo */}
           <div className="col-md-2 ">
-            <label for="cpt1">CPTCode1</label>
+            <label for="accessionno">AccessionNo</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="cpt1"
-              placeholder={CPTCode1}
-              value={CPTCode1}
-              onChange={(e) => setCPTCode1(e.target.value)}
+              id="accessionno"
+              placeholder={AccessionNo}
+              value={AccessionNo}
+              onChange={(e) => setAccessionNo(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/* CPTCode2 */}
+          {/* ProcessStage */}
+          <div className="col-md-2">
+            <label for="processstage">Process Stage</label>
+            <select
+              className="custom-select"
+              value={ProcessStage}
+              onChange={(e) => setProcessStage(e.target.value)}
+            >
+              <option value=""></option>
+              <option value="BotFinished-Success">BotFinished-Success</option>
+              <option value="BotIsEating">BotIsEating</option>
+              <option value="BotProcessed-NoSuccess">
+                BotProcessed-NoSuccess
+              </option>
+              <option value="Employee-NotInProd">
+                Employee-NotInProd
+              </option>
+              <option value="Hold-HFTeamApp_Human">Hold-HFTeamApp_Human</option>
+              <option value="Hold-ProdApp_Human">Hold-ProdApp_Human</option>
+              <option value="HRSAReady">HRSAReady</option>
+              <option value="HRSATempIDTracking">HRSATempIDTracking</option>
+              <option value="InProd">InProd</option>
+              <option value="Ins_SentToBotFood">Ins_SentToBotFood</option>
+              <option value="PrevWorked">PrevWorked</option>
+              <option value="Voided">Voided</option>
+            </select>
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* CPTCode */}
           <div className="col-md-2 ">
-            <label for="cpt2">CPTCode2</label>
+            <label for="cpt">CPTCode</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="cpt2"
-              placeholder={CPTCode2}
-              value={CPTCode2}
-              onChange={(e) => setCPTCode2(e.target.value)}
+              id="cpt"
+              placeholder={CPTCode}
+              value={CPTCode}
+              onChange={(e) => setCPTCode(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/* CPTCode3 */}
-          <div className="col-md-2 ">
-            <label for="cpt3">CPTCode3</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="cpt3"
-              placeholder={CPTCode3}
-              value={CPTCode3}
-              onChange={(e) => setCPTCode3(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* CPTCode4 */}
-          <div className="col-md-2 ">
-            <label for="cpt4">CPTCode4</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="cpt4"
-              placeholder={CPTCode4}
-              value={CPTCode4}
-              onChange={(e) => setCPTCode4(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* CPTCode5 */}
-          <div className="col-md-2 ">
-            <label for="cpt5">CPTCode5</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="cpt5"
-              placeholder={CPTCode5}
-              value={CPTCode5}
-              onChange={(e) => setCPTCode5(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* CPTCode6 */}
-          <div className="col-md-2 ">
-            <label for="cpt6">CPTCode6</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="cpt6"
-              placeholder={CPTCode6}
-              value={CPTCode6}
-              onChange={(e) => setCPTCode6(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-        </div>
-
-        {/* ICD10Code1
-        ICD10Code2
-        ICD10Code3
-        ICD10Code4
-        ICD10Code5
-        ICD10Code6 */}
-        <div className="row mt-4">
           {/* ICD10Code1 */}
           <div className="col-md-2 ">
             <label for="icd1">ICD10Code1</label>
@@ -1134,7 +984,15 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
+        </div>
 
+        {/* ICD10Code4
+            ICD10Code5
+            ICD10Code6
+            ICD10Code7
+            ICD10Code8
+            ICD10Code9 */}
+        <div className="row mt-4">
           {/* ICD10Code4 */}
           <div className="col-md-2 ">
             <label for="icd4">ICD10Code4</label>
@@ -1176,15 +1034,7 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
-        </div>
 
-        {/* ICD10Code7
-        ICD10Code8
-        ICD10Code9
-        ICD10Code10
-        ICD10Code11
-        ICD10Code12 */}
-        <div className="row mt-4">
           {/* ICD10Code7 */}
           <div className="col-md-2 ">
             <label for="icd7">ICD10Code7</label>
@@ -1226,7 +1076,16 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
+        </div>
 
+        {/* ICD10Code10
+            ICD10Code11
+            ICD10Code12
+            Prof_Fee
+            Tech_Fee
+            Glob_Fee
+            */}
+        <div className="row mt-4">
           {/* ICD10Code10 */}
           <div className="col-md-2 ">
             <label for="icd10">ICD10Code10</label>
@@ -1268,219 +1127,352 @@ const ChargeImportUpdateForm = (props) => {
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
+
+          {/* Prof_Fee */}
+          <div className="col-md-2 ">
+            <label for="proffee">Prof_Fee</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="proffee"
+              placeholder={Prof_Fee}
+              value={Prof_Fee}
+              onChange={(e) => setProf_Fee(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* Tech_Fee */}
+          <div className="col-md-2 ">
+            <label for="techfee">Tech_Fee</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="techfee"
+              placeholder={Tech_Fee}
+              value={Tech_Fee}
+              onChange={(e) => setTech_Fee(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* Glob_Fee */}
+          <div className="col-md-2 ">
+            <label for="globfee">Glob_Fee</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="globfee"
+              placeholder={Glob_Fee}
+              value={Glob_Fee}
+              onChange={(e) => setGlob_Fee(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
         </div>
 
-        {/* ServiceType
-        PartnerGroupName
-        WSLOrderID
-        InsMissing
-        DateToProduction
-        NeedsReview */}
+        {/* CR_Prof_Fee
+          MCR_Tech_Fee
+          MCR_Glob_Fee
+          LastBotMachineName
+          LastBotResult
+          Voided */}
         <div className="row mt-4">
-          {/* ServiceType */}
+          {/* MCR_Prof_Fee */}
           <div className="col-md-2 ">
-            <label for="servicetype">Service Type</label>
+            <label for="mcrproffee">MCR_Prof_Fee</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="servicetype"
-              placeholder={ServiceType}
-              value={ServiceType}
+              id="mcrproffee"
+              placeholder={MCR_Prof_Fee}
+              value={MCR_Prof_Fee}
+              onChange={(e) => setMCR_Prof_Fee(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* MCR_Tech_Fee */}
+          <div className="col-md-2 ">
+            <label for="mcrtechfee">MCR_Tech_Fee</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="mcrtechfee"
+              placeholder={MCR_Tech_Fee}
+              value={MCR_Tech_Fee}
+              onChange={(e) => setMCR_Tech_Fee(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* MCR_Glob_Fee */}
+          <div className="col-md-2 ">
+            <label for="mcrglobfee">MCR_Glob_Fee</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="mcrglobfee"
+              placeholder={MCR_Glob_Fee}
+              value={MCR_Glob_Fee}
+              onChange={(e) => setMCR_Glob_Fee(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* LastBotMachineName */}
+          <div className="col-md-2 ">
+            <label for="lastBbtmachinename">LastBotMachineName</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="lastBbtmachinename"
+              placeholder={LastBotMachineName}
+              value={LastBotMachineName}
+              onChange={(e) => setLastBotMachineName(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* LastBotResult */}
+          <div className="col-md-2 ">
+            <label for="lastbotresult">LastBotResult</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="lastbotresult"
+              placeholder={LastBotResult}
+              value={LastBotResult}
+              onChange={(e) => setLastBotResult(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* Voided */}
+          <div className="col-md-2 ">
+            <label for="voided">Voided</label>
+            <select
+              id="voided"
+              className="custom-select"
+              value={Voided === true ? "1" : "0"}
               onChange={(e) =>
-                e.target.value === "1"
-                  ? setServiceType(true)
-                  : setServiceType(false)
+                e.target.value === "1" ? setVoided(true) : setVoided(false)
               }
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
+            >
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
 
-          {/* PartnerGroupName */}
-          <div className="col-md-2 ">
-            <label for="partnergroupname">Partner GroupName</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="partnergroupname"
-              placeholder={PartnerGroupName}
-              value={PartnerGroupName}
-              onChange={(e) => setPartnerGroupName(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* WSLOrderID */}
-          <div className="col-md-2 ">
-            <label for="wslorderid">WSLOrderID</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="wslorderid"
-              placeholder={WSLOrderID}
-              value={WSLOrderID}
-              onChange={(e) => setWSLOrderID(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* InsMissing */}
-          <div className="col-md-2 ">
-            <label for="insmissing">Insurance Missing</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="insmissing"
-              placeholder={InsMissing}
-              value={InsMissing}
-              onChange={(e) => setInsMissing(e.target.value)}
-            />
-            <div className="valid-feedback">Looks good!</div>
-          </div>
-
-          {/* DateToProduction */}
-          <div className="col-md-2 ">
-            <label for="datetoproduction">DateToProduction</label>
-            <input
-              type="text"
-              className={"form-control inputfont"}
-              id="datetoproduction"
-              // placeholder={DateToProduction}
-              value={Moment.utc(new Date(claim.DateToProduction)).format(
-                "YYYY-MM-DD"
-              )}
-              // onChange={(e) => setDateToProduction(e.target.value)}
-              readOnly
-            />
             <div className="valid-feedback">Looks good!</div>
           </div>
 
           {/* NeedsReview */}
-          <div className="col-md-2 ">
+          {/* <div className="col-md-2 ">
             <label for="needsreview">Needs Review</label>
             <select
-              id='needsreview'
+              id="needsreview"
               className="custom-select"
-              value={NeedsReview === true ? '1' : '0'}
+              value={NeedsReview === true ? "1" : "0"}
               onChange={(e) =>
                 e.target.value === "1"
                   ? setNeedsReview(true)
                   : setNeedsReview(false)
               }
             >
-              <option value='1'>Yes</option>
-              <option value='0'>No</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
             </select>
-           
+
+            <div className="valid-feedback">Looks good!</div>
+          </div> */}
+        </div>
+
+        {/* VoidedDate
+            LastUserID
+            LastUserUpdate
+            HRSAID
+            NGO_ChargeItemID
+            NGO_ChargeAmount */}
+
+        <div className="row mt-4">
+          {/* VoidedDate */}
+          <div className="col-md-2 ">
+            <label for="voideddate">VoidedDate</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="voideddate"
+              value={Moment.utc(new Date(claim.VoidedDate)).format(
+                "YYYY-MM-DD"
+              )}
+              // onChange={(e) => setVoidedDate(e.target.value)}
+              readOnly
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* LastUserID */}
+          <div className="col-md-2 ">
+            <label for="lastuseriD">LastUserID</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="lastuseriD"
+              placeholder={LastUserID}
+              value={LastUserID}
+              onChange={(e) => setLastUserID(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* LastUserUpdate */}
+          <div className="col-md-2 ">
+            <label for="lastuserupdate">LastUserUpdate</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="lastuserupdate"
+              value={Moment.utc(new Date(claim.LastUserUpdate)).format(
+                "YYYY-MM-DD"
+              )}
+              // onChange={(e) => setLastUserUpdate(e.target.value)}
+              readOnly
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* HRSAID */}
+          <div className="col-md-2 ">
+            <label for="hrsaid">HRSAID</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="hrsaid"
+              placeholder={HRSAID}
+              value={HRSAID}
+              onChange={(e) => setHRSAID(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* NGO_ChargeItemID */}
+          <div className="col-md-2 ">
+            <label for="nchargeitemid">NGO_ChargeItemID</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="nchargeitemid"
+              placeholder={NGO_ChargeItemID}
+              value={NGO_ChargeItemID}
+              onChange={(e) => setNGO_ChargeItemID(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* NGO_ChargeAmount */}
+          <div className="col-md-2 ">
+            <label htmlFor="nchargeamount">NGO_ChargeAmount</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="nchargeamount"
+              placeholder={NGO_ChargeAmount}
+              value={NGO_ChargeAmount}
+              onChange={(e) => setNGO_ChargeAmount(e.target.value)}
+            />
             <div className="valid-feedback">Looks good!</div>
           </div>
         </div>
 
-        {/* IssueID
-        InNGO
-        NGO_IsBalance
-        ProcessStage */}
-
         <div className="row mt-4">
-          {/* IssueID */}
+          {/* NGO_Pat_Resp */}
           <div className="col-md-2 ">
-            <label for="issueid">IssueID</label>
+            <label for="npatresp">NGO_Pat_Resp</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="issueid"
-              placeholder={IssueID}
-              value={IssueID}
-              onChange={(e) => setIssueID(e.target.value)}
+              id="npatresp"
+              placeholder={NGO_Pat_Resp}
+              value={NGO_Pat_Resp}
+              onChange={(e) => setNGO_Pat_Resp(e.target.value)}
             />
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-          {/* InNGO */}       
+          {/* NGO_Pat_Pmt */}
           <div className="col-md-2 ">
-            <label for="inngo">In NGO</label>
-            <select
-              id='inngo'
-              className="custom-select"
-              value={InNGO === 1 ? '1' : '0'}
-              onChange={(e) =>
-                e.target.value === '1'
-                  ? setInNGO(1)
-                  : setInNGO(0)
-              }
-            >
-              <option value='1'>Yes</option>
-              <option value='0'>No</option>
-            </select>
-           
+            <label for="ngopatpmt">NGO_Pat_Pmt</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="ngopatpmt"
+              placeholder={NGO_Pat_Pmt}
+              value={NGO_Pat_Pmt}
+              onChange={(e) => setNGO_Pat_Pmt(e.target.value)}
+            />
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-
-
-          {/* NGO_IsBalance */}          
+          {/* NGO_Ins_Pmt */}
           <div className="col-md-2 ">
-            <label for="ngoisbalance">NGO IsBalance</label>
+            <label for="ninspmt">NGO_Ins_Pmt</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="ninspmt"
+              placeholder={NGO_Ins_Pmt}
+              value={NGO_Ins_Pmt}
+              onChange={(e) => setNGO_Ins_Pmt(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* NGO_Ins_Adj */}
+          <div className="col-md-2 ">
+            <label for="ninsadj">NGO_Ins_Adj</label>
+            <input
+              type="text"
+              className={"form-control inputfont"}
+              id="ninsadj"
+              placeholder={NGO_Ins_Adj}
+              value={NGO_Ins_Adj}
+              onChange={(e) => setNGO_Ins_Adj(e.target.value)}
+            />
+            <div className="valid-feedback">Looks good!</div>
+          </div>
+
+          {/* NGO_InsBal */}
+          <div className="col-md-2 ">
+            <label for="ngoinsbal">NGO InsBal</label>
             <select
-              id='ngoisbalance'
+              id="ngoinsbal"
               className="custom-select"
-              value={NGO_IsBalance === true ? '1' : '0'}
+              value={NGO_InsBal === true ? "1" : "0"}
               onChange={(e) =>
                 e.target.value === "1"
-                  ? setNGO_IsBalance(true)
-                  : setNGO_IsBalance(false)
+                  ? setNGO_InsBal(true)
+                  : setNGO_InsBal(false)
               }
             >
-              <option value='1'>Yes</option>
-              <option value='0'>No</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
             </select>
-           
+
             <div className="valid-feedback">Looks good!</div>
           </div>
 
-
-
-          {/* ProcessStage */}
-          {/* <div className="col-md-2 ">
-            <label for="currentprocessstage">Current ProcessStage</label>
+          {/* NGO_RefreshDate */}
+          <div className="col-md-2 ">
+            <label for="ngorefreshdate">NGO_RefreshDate</label>
             <input
               type="text"
               className={"form-control inputfont"}
-              id="currentprocessstage"
-              placeholder={ProcessStage}
-              value={ProcessStage}
-              onChange={(e) => setProcessStage(e.target.value)}
+              id="ngorefreshdate"
+              value={ claim.NGO_RefreshDate ? Moment.utc(new Date(claim.NGO_RefreshDate)).format(
+                "YYYY-MM-DD") : null }
+              // onChange={(e) => setLastUserUpdate(e.target.value)}
+              readOnly
             />
-            <div className="valid-feedback">Looks good!</div>
-          </div> */}
-
-          <div className="col-md-2">
-            <label for="processstage">Process Stage</label>
-            <select
-              className="custom-select"
-              value={ProcessStage}
-              onChange={(e) => setProcessStage(e.target.value)}
-            >
-              <option value=""></option>
-              <option value="Employee-NotInProduction">
-                Employee-NotInProduction
-              </option>
-              <option value="Imported-Duplicate">Imported-Duplicate</option>
-              <option value="Imported-issue identified">
-                Imported-issue identified
-              </option>
-              <option value="Imported-not in Production">
-                Imported-not in Production
-              </option>
-              <option value="InProduction">InProduction</option>
-            </select>
-            {/* <input
-              type="text"
-              className={"form-control inputfont"}
-              id="processstage"
-              placeholder={ProcessStage}
-              value={ProcessStage}
-              onChange={(e) => setProcessStage(e.target.value)}
-            /> */}
             <div className="valid-feedback">Looks good!</div>
           </div>
         </div>
@@ -1508,7 +1500,7 @@ const ChargeImportUpdateForm = (props) => {
       </form>
 
       {showOverlay && (
-        <ChargeImportModal
+        <ProdModal
           enteredData={enteredData}
           claim={claim}
           cancelHandler={myCancelHandler}
@@ -1521,4 +1513,4 @@ const ChargeImportUpdateForm = (props) => {
   );
 };
 
-export default ChargeImportUpdateForm;
+export default ProdUpdateForm;

@@ -1,0 +1,93 @@
+table td,
+table th {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.mythead tr {
+  /* background-color: #092946; */
+  color: white;
+  top: 0;
+}
+
+
+.mytheadtr {  
+  position: sticky !important;
+  top: 0 !important;
+}
+
+
+tbody tr:hover {
+  background-color: #e0a801 !important;
+}
+
+.txtnodeco {
+  text-decoration: none;
+  /* color: #092946; */
+}
+
+.txtnodeco:hover {
+  text-decoration: none;
+  /* color: #092946; */
+}
+
+.tablesection {
+  width: 98% !important;
+  margin: 0 auto;
+  /* .scrollbar-warning */
+}
+
+/* .citable-container{
+    width: calc(100% - 15%);
+    
+} */
+
+/* .tablemaincont{
+    height: calc(100% - 5%);
+} */
+
+/* .table-fit {
+    width: auto !important;
+    table-layout: auto !important;
+}
+.table-fit thead th, table.table-fit tfoot th {
+    width: auto !important;
+}
+.table-fit tbody td, table.table-fit tfoot td {
+    width: auto !important;
+} */
+
+.my_btn {
+  font: inherit;
+  padding: 0.3rem 1.0rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #103b64;
+  color:  white;
+  border: 1px solid #103b64;
+  /* margin: 2rem auto; */
+  font-weight: 700;
+}
+
+.my_btn:hover {
+  border-color: #e0a801;
+  color: #103b64;
+  background-color: #e0a801;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+
+.searchtxt{
+    font-weight: 400;
+}
+
+.fontweight{
+  font-weight: 400;
+}
+
+
+.baglink{
+  background-color: #103b64;
+  color: white;
+}
